@@ -17,16 +17,39 @@ events = [
     Event(2, "Python Workshop")
 ]
 
+@app.route("/", methods=["GET"])
+def welcome():
+    return {"message": "Welcome"}
+
+
+@app.route("/events", methods=["GET"])
+def get_events():
+    event_list = []
+    for event in events:
+        event_list.append(event.to_dict())
+
+    return jsonify(event_list)
+
+
 # TODO: Task 1 - Define the Problem
 # Create a new event from JSON input
 @app.route("/events", methods=["POST"])
 def create_event():
-    # TODO: Task 2 - Design and Develop the Code
+    data = request.get_json()
 
-    # TODO: Task 3 - Implement the Loop and Process Each Element
+    if not data or "title" not in data:
+        return jsonify({"Error": "Missing title field"}), 400
 
-    # TODO: Task 4 - Return and Handle Results
-    pass
+    if "id" not in data:
+        return jsonify({"Error": "Missing id field"}), 400
+
+    new_event = Event(id=data["id"], title=data["title"])
+
+    events.append(new_event)
+
+    return jsonify(new_event.to_dict()), 201
+
+    
 
 # TODO: Task 1 - Define the Problem
 # Update the title of an existing event
