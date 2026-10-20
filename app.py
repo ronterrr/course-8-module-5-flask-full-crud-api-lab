@@ -83,8 +83,8 @@ def delete_event(event_id):
             event = e
             break
 
-        if not event:
-            return jsonify({"Error": "Event not found"}), 404
+    if not event:
+        return jsonify({"Error": "Event not found"}), 404
 
         events.remove(event)
 
