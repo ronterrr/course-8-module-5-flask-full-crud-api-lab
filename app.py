@@ -40,10 +40,9 @@ def create_event():
     if not data or "title" not in data:
         return jsonify({"Error": "Missing title field"}), 400
 
-    if "id" not in data:
-        return jsonify({"Error": "Missing id field"}), 400
+    event_id = len(events) + 1
 
-    new_event = Event(id=data["id"], title=data["title"])
+    new_event = Event(id=event_id, title=data["title"])
 
     events.append(new_event)
 
